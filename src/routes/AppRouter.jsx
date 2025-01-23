@@ -4,7 +4,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
-import PrivateRoute from "./PrivateRoute"; // If you create a PrivateRoute component
+
 
 export default function AppRouter() {
   return (
@@ -14,15 +14,7 @@ export default function AppRouter() {
         
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
-        {/* Private routes requiring authentication */}
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
+        <Route path="/dashboard" element={  <Dashboard />}
         />
       </Routes>
     </Router>
