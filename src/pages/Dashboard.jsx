@@ -8,6 +8,14 @@ export default function Dashboard() {
 
   const [filter, setFilter] = useState("all");
   const [sortType, setSortType] = useState("creationDate");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const searchedTasks = sortedTasks.filter(
+    (task) =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
@@ -19,7 +27,7 @@ export default function Dashboard() {
   const filteredTasks = tasks.filter((task) => {
     if (filter === "completed") return task.completed;
     if (filter === "pending") return !task.completed;
-    return true; // "all"
+    return true;
   });
 
   const sortedTasks = filteredTasks.slice().sort((a, b) => {
@@ -34,6 +42,13 @@ export default function Dashboard() {
   return (
     <div className="p-4">
       <h1 className="text-2xl mb-4">Task Dashboard</h1>
+      <input
+        type="text"
+        placeholder="Search tasks"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="border px-2 py-1 mb-4"
+      />
 
       <div className="flex mb-4">
         <select
@@ -55,6 +70,7 @@ export default function Dashboard() {
           <option value="dueDate">Due Date</option>
         </select>
       </div>
+      <TaskList tasks={searchedTasks}></TaskList>
       <TaskForm onAddTask={addTask} />
       <TaskList tasks={tasks} onEditTask={editTask} onRemoveTask={removeTask} />
     </div>
